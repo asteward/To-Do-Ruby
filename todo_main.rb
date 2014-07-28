@@ -103,6 +103,9 @@ def task_menu location
     puts " A) Add a task"
     puts " D) Display tasks"
     puts " R) Remove a task"
+    puts " O) Organize tasks"
+    puts " S) Switch list"
+    puts " C) Change task name"
     puts " E) Exit to Main Menu"
     main_choice = gets.chomp.upcase
     if main_choice == 'A'
@@ -110,9 +113,15 @@ def task_menu location
     elsif main_choice == 'D'
       display_tasks(location)
     elsif main_choice == 'R'
-      remove_task
+      remove_task(location)
     elsif main_choice == 'E'
       main_menu
+    elsif main_choice == 'S'
+      select_list
+    elsif main_choice == 'O'
+      organize_list(location)
+    elsif main_choice == 'C'
+      change_description(location)
     else
       system 'clear'
       puts "Sorry, that wasn't a valid option.\n"
@@ -123,12 +132,64 @@ end
 def add_task location
   puts "What task would you like to add?"
   name = gets.chomp
-  @list_of_lists[location].add_task(name)
+  new_task = @list_of_lists[location].add_task(name)
+  puts "What is the due date?"
+  date = gets.chomp
+  new_task.set_due_date(date)
+  puts "What is the priority level (1-5)?"
+  level = gets.chomp
+  new_task.set_priority(level)
 end
 
 def display_tasks location
   puts "Here are your tasks"
   puts @list_of_lists[location].list_tasks
 end
+
+
+
+def remove_task location
+  display_tasks(location)
+
+
+  puts "Please enter the name of the task to be removed:"
+  name = gets.chomp
+  @list_of_lists[location].remove_task(name)
+
+  puts "List removed! Here is the updated list:"
+  display_tasks(location)
+
+end
+
+def organize_list (location)
+  puts "Sort by N)ame D)ate or P)riority?"
+  loop do
+    organize = gets.chomp.upcase
+    if organize == "N"
+      @list_of_lists[location].name_organize
+      display_tasks(location)
+      break
+    elsif organize == "D"
+      @list_of_lists[location].date_organize
+      display_tasks(location)
+      break
+    elsif organize == "P"
+      @list_of_lists[location].priority_organize
+      display_tasks(location)
+      break
+    else
+      puts "Sort by N)ame D)ate or P)riority?"
+    end
+  end
+end
+
+def change_description (location)
+    puts "Input task name to change"
+    input = gets.chomp
+    puts "Input new name"
+    new_name = gets.chomp
+    @list_of_lists[location].rename_task(input, new_name)
+
+  end
 
 main_menu
