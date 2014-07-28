@@ -124,13 +124,11 @@ def add_task location
   puts "What task would you like to add?"
   name = gets.chomp
   @list_of_lists[location].add_task(name)
-  task_menu
 end
 
 def display_tasks location
   puts "Here are your tasks"
   puts @list_of_lists[location].list_tasks
-  task_menu
 end
 
 main_menu

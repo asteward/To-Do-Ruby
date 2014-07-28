@@ -1,9 +1,13 @@
 require './lib/tasks'
 
 class List
-  @tasks = []
+  # def tasks
+  #   @tasks
+  # end
+
   def initialize name
     @name = name
+    @tasks = []
   end
 
   def description
@@ -14,6 +18,7 @@ class List
     @tasks.each do |task|
       puts task.description
     end
+    puts ""
   end
 
   def add_task task_to_add

@@ -24,4 +24,9 @@ describe List do
     test_list = List.new('chores')
     expect(test_list.description).to eq 'chores'
   end
+
+  it 'adds a task to the task array' do
+  test_list = List.new('clean')
+  expect(test_list.add_task('clean')).to be_an_instance_of Task
+ end
 end
